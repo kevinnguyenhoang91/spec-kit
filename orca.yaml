@@ -1,0 +1,19 @@
+# Orca workspace settings for spec-kit.
+# Docs for each key: Orca's per-workspace environment guide (`orca skills get orca-per-workspace-env`).
+
+scripts:
+  # Runs in each new workspace checkout, on the host and inside VMs.
+  setup: ./scripts/orca-vm/setup.sh
+
+environmentRecipes:
+  # Disposable 2-CPU Ubuntu LTS VM per workspace, run with Lima on the host.
+  - id: lima-ubuntu-lts
+    name: Lima Ubuntu LTS
+    description: Disposable Ubuntu LTS VM per workspace, created with Lima.
+    create: ./scripts/orca-vm/lima-create.sh
+    suspend: ./scripts/orca-vm/lima-suspend.sh
+    resume: ./scripts/orca-vm/lima-resume.sh
+    destroy: ./scripts/orca-vm/lima-destroy.sh
+    timeoutSeconds:
+      create: 1800 # first run downloads the Ubuntu image
+      destroy: 300
